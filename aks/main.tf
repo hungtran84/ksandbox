@@ -33,7 +33,7 @@ resource "azurerm_subnet" "test" {
 
 locals {
   nodes = {
-    for i in range(3) : "worker${i}" => {
+    for i in range(2) : "worker${i}" => {
       name           = substr("worker${i}${random_id.prefix.hex}", 0, 12)
       vm_size        = "Standard_D2s_v3"
       node_count     = 1

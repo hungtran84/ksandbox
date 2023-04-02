@@ -7,6 +7,10 @@ on:
       - 'aks/**'
   pull_request:
 
+defaults:
+  run:
+    working-directory: aks
+
 permissions:
   contents: read
 
