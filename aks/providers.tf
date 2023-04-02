@@ -16,7 +16,7 @@ terraform {
     organization = "ksandbox"
 
     workspaces {
-      name = "default"
+      name = "sandbox"
     }
   }
 }
