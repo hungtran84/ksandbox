@@ -3,28 +3,33 @@ name: 'Terraform'
 on:
   push:
     branches: [ "master" ]
-    paths:
-      - 'aks/**'
   pull_request:
-
-defaults:
-  run:
-    working-directory: aks
 
 permissions:
   contents: read
 
 jobs:
+  directories:
+    name: "Directory-changes"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: theappnest/terraform-monorepo-action@master
+        id: directories
+      - run: echo ${{ steps.directories.outputs.modules }}
+    outputs:
+      dirs: ${{ steps.directories.outputs.modules }}
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: production
-
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    environment: sandbox
+    needs: directories
+    strategy:
+      matrix:
+        directories: ${{ fromJson(needs.directories.outputs.dirs) }}
     defaults:
       run:
+        working-directory: ${{ matrix.directories }}
         shell: bash
-
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
