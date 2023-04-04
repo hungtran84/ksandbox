@@ -47,7 +47,7 @@ locals {
 
 module "aks" {
   source              = "Azure/aks/azurerm"
-  version             = "6.7.1"
+  version             = "6.8.0"
   prefix              = "prefix-${random_id.prefix.hex}"
   resource_group_name = local.resource_group.name
   os_disk_size_gb     = 60
